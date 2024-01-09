@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Exceptions;
 
 class LinkedinController extends Controller
 {
@@ -43,8 +44,8 @@ class LinkedinController extends Controller
                     Auth::login($newUser);
                 }
             }
-            return redirect('/index')->with('succus', 'User Logged in!');
-            
+            return redirect('/welcome')->with('succus', 'User Logged in!');
+
         } catch (\Exception $e) {
             return redirect('login')->with('status', 'Something went wrong! Please try again later.');
         }

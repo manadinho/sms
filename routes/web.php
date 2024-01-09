@@ -6,10 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LinkedinController;
 
-
-
-Route::get('/index', function () {
-    return view('home');
+Route::get('/welcome', function () {
+    return view('welcome');
 });
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -25,9 +23,9 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
-Route::get('login/linkedin', [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
+Route::get('linkedin/redirect',      [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 
 Route::get('/dashboard', function () {

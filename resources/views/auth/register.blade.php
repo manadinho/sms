@@ -32,7 +32,7 @@
             </div>
         </button>
     </a>
-    <a href="{{url('/login/linkedin')}}"class="a">
+    <a href="{{url('/linkedin/redirect')}}"class="a">
         <button class="google-login-button">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="30" viewBox="0 0 48 48">
                 <path fill="#0078d4" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5	V37z"></path>
