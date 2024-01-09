@@ -22,10 +22,10 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
-Route::get('linkedin/redirect',      [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
+Route::get('auth/linkedin/redirect',      [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 
 Route::get('/dashboard', function () {
