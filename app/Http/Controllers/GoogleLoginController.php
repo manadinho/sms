@@ -22,11 +22,12 @@ class GoogleLoginController extends Controller
         $user = User::where('email', $googleUser->email)->first();
         if(!$user)
         {
-            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => \Hash::make(rand(100000,999999))]);
+            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' => \Hash::make(rand(100000,999999)),
+                                    'provider' => 'google', 'provider_id' => $googleUser->id,]);
         }
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('/index');
     }
 }
