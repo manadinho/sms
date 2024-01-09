@@ -2,8 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,11 +22,14 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+
+Route::get('auth/linkedin/redirect',      [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
+Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard')->name('dashboard');
 });
    
 
