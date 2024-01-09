@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         $loginToken->delete();
 
-        return redirect()->intended('welcome');
+        return redirect()->intended('welcome')->with('succus', 'Logged in successfully!');
     }
 
     public function register() {
