@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LinkedinController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
