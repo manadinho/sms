@@ -1,67 +1,63 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Mail\SigninMagicLinkEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use Hash;
-use Session;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\LoginMagicLinkToken;
 
 class AuthController extends Controller
-
-
 {
-    public function index()
-    {
+    public function login() {
         return view('auth.login');
     }
-    public function customLogin(Request $request)
-    {
+
+    public function loginMagicLink(Request $request) {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|email',
         ]);
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                ->withSuccess('Signed in');
-        }
-        return redirect("login")->withSuccess('Login details are not valid');
+
+        $user = User::updateOrCreate(['email' => $request->email], ['email' => $request->email, 'name' => ' ']);
+
+        LoginMagicLinkToken::where('user_id', $user->id)->delete();
+
+        $token = \Str::random(60);
+
+        $loginMagicToken = LoginMagicLinkToken::create([
+            'user_id' => $user->id,
+            'token' => hash('sha256', $token),
+            'expires_at' => now()->addMinutes(10)
+        ]);
+
+        $link = route('auth.magic-link-token', ['token' => $token]);
+
+        Mail::to($request->email)->send(new SigninMagicLinkEmail($request->email, $link));
+
+        session(['magic_link_email' => $request->email]);
+
+        return redirect()->route('auth.check-email');
     }
-    public function registration()
+
+    public function loginWithToken($token)
     {
+        $loginToken = LoginMagicLinkToken::where('token', hash('sha256', $token))
+                                ->where('expires_at', '>', now())
+                                ->firstOrFail();
+
+        \Auth::loginUsingId($loginToken->user_id);
+
+        $loginToken->delete();
+
+        return redirect()->intended('welcome');
+    }
+
+    public function register() {
         return view('auth.register');
     }
-    public function customRegistration(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
-        $data = $request->all();
-        $check = $this->create($data);
-        return redirect("dashboard")->withSuccess('You have signed-in');
-    }
-    public function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
-        ]);
-    }
-    public function dashboard()
-    {
-        if (Auth::check()) {
-            return view('auth.dashboard');
-        }
-        return redirect("login")->withSuccess('You are not allowed to access');
-    }
-    public function signOut()
-    {
-        Session::flush();
-        Auth::logout();
-        return Redirect('login');
+
+    public function checkEmail() {
+        return view('auth.check-email');
     }
 }

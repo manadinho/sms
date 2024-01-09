@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +15,6 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
@@ -25,9 +22,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
    
-Route::get('/login',[LoginController::class, 'login']);
-Route::get('/home',[LoginController::class, 'index']);
-Route::get('/email-confirm',[LoginController::class, 'emailConfirm']);
+
+Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login-with-magic-link', [AuthController::class, 'loginMagicLink'])->name('login-with-magic-link');
+    Route::get('/magic-link-login/{token}', [AuthController::class, 'loginWithToken'])->name('magic-link-token');
+    Route::get('/check-email',[AuthController::class, 'checkEmail'])->name('check-email');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/home',[HomeController::class, 'index']);
+    Route::get('/', function () {return view('welcome');})->name('welcome');
+});
+
 
 
 require __DIR__.'/auth.php';
