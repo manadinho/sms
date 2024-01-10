@@ -29,11 +29,11 @@ class GoogleLoginController extends Controller
             }
 
             Auth::login($user);
-            return redirect('/welcome')->with('success', 'User Logged in!');
+            return redirect('/home')->with('success', 'User Logged in!');
         }
          catch(\Exception $e) 
             {
-                return redirect('login')->with('status', 'Something went wrong! Please try again later.');
+                return redirect('auth/login')->with('status', 'Something went wrong! Please try again later.');
             }
         
     }
