@@ -8,31 +8,16 @@ use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
-Route::get('auth/linkedin/redirect',      [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.redirect');
+Route::get('auth/linkedin/redirect', [LinkedinController::class,   'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 
 Route::get('/dashboard', function () {
     return view('dashboard')->name('dashboard');
 });
    
-
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/register', [AuthController::class, 'register'])->name('register');
