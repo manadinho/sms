@@ -1,7 +1,5 @@
 @extends("master")
 @section("content")
-<body>
-    <body id="body-pd">
       <header class="header" id="header">
           <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
           <div class="header_img"> <img src="boy.png" alt=""> </div>
@@ -73,7 +71,6 @@
      }
      linkColor.forEach(l=> l.addEventListener('click', colorLink))
      
-      // Your code to run since DOM is loaded and ready
-     });
+          });
       </script>
   </body>
