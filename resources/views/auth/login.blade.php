@@ -1,18 +1,11 @@
 @extends("auth.master")
 @section("content")
-    <div>
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="mt-3">
         <div class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Your Logo" width="60px">
+            <img src="{{ asset('images/logo-rm.png') }}" alt="Your Logo" width="60px">
         </div>
         <h1 style="font-size: 24px;">Sign in to SM</h1>
-        <p><span class="account-text">Don't have an account?</span> <a href="{{route('auth.register')}}" class="get-started-link">Get Started</a></p>
+        <p><span class="account-text">Don't have an account?</span> <a href="{{route('auth.register')}}" class="get-started-link a-get">Get Started</a></p>
         <a href="{{ route('google.redirect') }}"class="a">
             <button class="google-login-button">
                 <svg width="1em" height="1em" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" class="text-base">
@@ -52,14 +45,15 @@
                 <i class="toggle-password fas fa-eye-slash eyeIcon" onclick="togglePassword()"></i>
                 <input type="password" class="password-input" placeholder="Enter your password">
             </div>
-            <br>
             <button class="signin-button" id="signInButton" style="display: none;">Sign In</button>
             <br>
             <input type="submit" class="send-link-button" value="Send me a magic Link">
         </form>
         <br>
-        <a href="#" class="sign" id="passwordLink"><h3>Sign in using password</h3></a>
-        <p class="footer-paragraph">By continuing, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+        <div class="sign">
+            <button class="button-sign" id="passwordLink">Sign in using password</button>
+        </div>
+        <p class="footer-paragraph">By continuing, you agree to the <a class="a-terms" href="#">Terms of Service</a> and <a class="a-terms" href="#">Privacy Policy</a>.</p>
     </div>
 @endsection
 @push('script')

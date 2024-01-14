@@ -1,6 +1,6 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  /* background-color: #f5f5f5; */
+  background-color: #f5f5f5 !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,27 +13,31 @@ body {
 .a{
   text-decoration: none;
 }
+.a:hover{
+  color: transparent
+}
+.a-get{
+  text-decoration: none;
+  font-weight: bolder;
+}
+.a-get:hover{
+  text-decoration: underline !important;
+  background-color: transparent;
+  color: #12b886 !important;
+}
+.a-terms{
+  text-decoration: underline;
+}
+.a-terms:hover{
+  text-decoration: underline !important;
+  background-color: transparent;
+  color: #666 !important;
+}
 .logo {
   margin-bottom: 20px;
   border-radius: 50%;
   text-align: start;
 }
-
-h1 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 16px;
-  text-align: start;
-}
-
-p {
-  color: #666;
-  margin-bottom: 20px;
-  font-size: 10px;
-  text-align: start;
-  font-style: bold;
-}
-
  
 .google-login-button {
   display: block;
@@ -82,6 +86,8 @@ p {
   border-radius:0.5rem;
   cursor: pointer;
   width: 100%;
+  font-size: 14px !important;
+  line-height: initial !important;
 }
 
 .footer-paragraph {
@@ -97,11 +103,22 @@ p {
   text-align: center;
   margin-bottom: 20px;
 }
-.sign{
+.sign {
   text-align: center;
-  text-decoration: none;
-  color:#12b886;
 }
+
+.button-sign {
+  text-decoration: none;
+  color: #12b886;
+  font-size: 16px !important;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  display: inline-block; /* Add this property */
+  outline: none !important;
+}
+
 .google-login-button {
   display: flex;
   align-items: center;
@@ -169,6 +186,7 @@ p {
   .password-input {
       width: 100%; 
   }
+  
 }
 
 .eyeIcon{
@@ -223,7 +241,7 @@ margin-left: auto;
 margin-right: auto;
 color: #868e96; 
 }
-.button {
+.button-submit {
 background-color: #12b886;
 color: #fff;
 padding: 13px;
