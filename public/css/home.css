@@ -191,7 +191,7 @@ a {
   font-size: 1.25rem;
 }
 
-.show {
+.display-sidebar{
   left: 0;
 }
 
@@ -221,27 +221,27 @@ a {
 }
  /* Extend from dropdown */
  .dropdown-menu {
-            padding: .7rem 0rem;
-            position: absolute;
-            font-size: .875rem;
-            line-height: 22px;
-            background-color: var(--body-color);
+  padding: .7rem 0rem;
+  position: absolute;
+  font-size: .875rem;
+  line-height: 22px;
+  background-color: var(--body-color);
             /* color: #5c5776;     */
-            border: none;
-            box-shadow: 0 10px 30px 0 rgba(31, 45, 61, 0.1);
-            border-radius: .5rem;
-            display: block;
-            visibility: hidden;
-            opacity: 0;
-            right: 0; /* Ensure the dropdown starts from the right side */
-            left: auto;
-            -webkit-transform: translateX(20px); /* Adjust X translation */
-            -ms-transform: translateX(20px);
-            transform: translateX(20px);
-            -webkit-transition: all 0.3s ease-in;
-            -o-transition: all 0.3s ease-in;
-            transition: all 0.3s ease-in;
-        }
+  border: none;
+  box-shadow: 0 10px 30px 0 rgba(31, 45, 61, 0.1);
+  border-radius: .5rem;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  right: 0;
+  left: auto;
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
         .dropdown-menu a {
         color:var(--text-color); /* Your desired text color */
             }
@@ -262,6 +262,19 @@ a {
             opacity: 1;
             visibility: visible;
         }
+
+        .dropdown-item{
+          background-color: #ffffff;
+          color: #000000;
+        }
+        .dark-mode .dropdown-item{
+          background-color: #141517;
+          color: #ffffff;
+        }
+        .dropdown-item:hover {
+          color: #27cd9b;
+        }
+
 
         .dropdown-submenu:hover > .dropdown-menu {
             -webkit-transform: translateX(0); /* Translate back to 0 */
@@ -331,6 +344,47 @@ a {
         .avatar-online:before {
             background-color: green;
         }
+        .card{
+            width: 250px;
+            height: auto;
+            background-color: var(--header-color);
+        }
+ /* Reduce padding and margin for the modal content */
+.modal-content {
+  padding: 10px;
+  background-color: var(--header-color);
+}
+
+/* Reduce margin for the modal body */
+.modal-body {
+  margin: -10px -10px 10px -10px;
+  background-color: var(--body-color);
+}
+
+/* Style the form elements */
+.form-label, .form-control {
+  margin-bottom: 10px;
+}
+
+/* Adjust button styling */
+.btn-secondary, .btn-success {
+  padding: 5px 10px;
+}
+.form-select {
+    background-color: var(--header-color); 
+    color: var(--text-color);
+}
+
+/* Styles for the Create Post Buttons */
+.gradient-btn {
+  background: #099268;
+  border: none;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
 @media screen and (min-width: 768px) 
 {
@@ -358,11 +412,12 @@ a {
     padding: 1rem 1rem 0 0;
   }
 
-  .show {
+  .display-sidebar {
     width: calc(var(--nav-width) + 165px);
   }
 
   .body-pd {
     padding-left: calc(var(--nav-width) + 168px);
   }
+
 }

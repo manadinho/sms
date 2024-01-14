@@ -1,23 +1,16 @@
 @extends("auth.master")
 @section("content")
     <div>
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
         @if (session('status'))
             <div class="alert alert-danger">
                 {{ session('status') }}
             </div>
         @endif
         <div class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Your Logo" width="60px">
+            <img src="{{ asset('images/logo-rm.png') }}" alt="Your Logo" width="60px">
         </div>
         <h1 style="font-size: 24px;">Sign up to SM</h1>
-        <p><span class="account-text">Already have an account?</span> <a href="{{route('auth.login')}}" class="get-started-link">Sign in</a></p>
+        <p><span class="account-text">Already have an account?</span> <a href="{{route('auth.login')}}" class="get-started-link a-get">Sign in</a></p>
         <a href="{{ route('google.redirect') }}"class="a">
             <button class="google-login-button">
                 <svg width="1em" height="1em" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" class="text-base">
@@ -58,7 +51,7 @@
         <br>
         <button class="send-link-button">Continue with email</button>
         <br>
-        <p class="footer-paragraph">By continuing, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+        <p class="footer-paragraph">By continuing, you agree to the <a href="#" class="a-terms">Terms of Service</a> and <a href="#" class="a-terms">Privacy Policy</a>.</p>
     </div>
 @endsection
 @push('script')
