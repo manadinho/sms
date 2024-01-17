@@ -44,10 +44,26 @@ class LinkedinController extends Controller
                     Auth::login($newUser);
                 }
             }
-            return redirect('welcome')->with('success', 'User Logged in!');
+            return redirect()->route('welcome')->with('success', 'User Logged in!');
 
         } catch (\Exception $e) {
             return redirect('auth/login')->with('status', 'Something went wrong! Please try again later.');
         }
+    }
+
+    public function authenticate()
+    {
+        $clientId = env('LINKEDIN_CLIENT_ID');
+        $clientSecret = env('LINKEDIN_CLIENT_SECRET');
+        $redirectUri = env('LINKEDIN_REDIRECT_URL');
+
+        $authorizationUrl = 'https://www.linkedin.com/oauth/v2/authorization?' . http_build_query([
+            'response_type' => 'code',
+            'client_id' => $clientId,
+            'redirect_uri' => $redirectUri,
+            'scope' => 'openid profile email',
+            ]);
+
+        return redirect($authorizationUrl);
     }
 }

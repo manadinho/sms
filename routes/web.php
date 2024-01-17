@@ -11,8 +11,11 @@ use App\Http\Controllers\HomeController;
 Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
+
 Route::get('auth/linkedin/redirect', [LinkedinController::class,   'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
+Route::get('auth/linkedin/authenticate', [LinkedInController::class, 'authenticate'])->name('linkedin.authenticate');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard')->name('dashboard');
@@ -29,6 +32,7 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
     Route::get('/', function () {return view('welcome');})->name('welcome');
+    Route::get('/socials',[HomeController::class, 'network'])->name('socials');
 });
 
 
