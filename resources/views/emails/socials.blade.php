@@ -1,26 +1,16 @@
 @extends('master')
 @section('content')
-<header class="header" id="header">
-    <div class="header_toggle">
-        <i class="bx bx-menu" id="header-toggle"></i>
-    </div>
-    <div class="theme-icon">
-        <i class="bx bx-moon" id="theme-icon"></i>
-    </div>
-    
-    <!-- Dropdown Code -->
-    @include('partials.dropdown')
-    <!-- End Dropdown Code -->
-</header>
-
+@include('partials.header')
 @include('partials.side-bar')
-<div class="container mt-5">
-  <h3>Socials</h3>
-  <div class="col-md-8 text-md-end mt-3 position-button">
-    <button type="button" class="btn btn-success gradient-btn" data-bs-toggle="modal" data-bs-target="#customCreateaiPostModal">Create New</button>
-  </div>
-  <div class="profile-text">
-    <p>Your Profiles</p>
+<div class="height-100 bg-light">
+  <div class="container mt-5">
+    <div class="col-md-8 text-md-end mt-3 position-button">
+      <button type="button" class="btn btn-success gradient-btn" data-bs-toggle="modal" data-bs-target="#customCreateaiPostModal">Create New</button>
+    </div>
+    <div class="profile-text">
+    <h3>Socials</h3>
+      <p>Your Profiles</p>
+    </div>
   </div>
 </div>
 <div class="modal fade" id="customCreateaiPostModal" tabindex="-1" role="dialog" aria-labelledby="customCreateaiPostModalLabel" aria-hidden="true">
@@ -84,42 +74,3 @@
 </div>
 
 @endsection
-@push('script')
-    <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            const showNavbar = (toggleId, navId, bodyId, headerId) =>
-            {
-                const toggle = document.getElementById(toggleId),
-                nav = document.getElementById(navId),
-                bodypd = document.getElementById(bodyId),
-                headerpd = document.getElementById(headerId)
-                if(toggle && nav && bodypd && headerpd){
-                    toggle.addEventListener('click', ()=>{
-                    nav.classList.toggle('display-sidebar')
-                    toggle.classList.toggle('bx-x')
-                    bodypd.classList.toggle('body-pd')
-                    headerpd.classList.toggle('body-pd') })
-                }
-            }
-        showNavbar('header-toggle','nav-bar','body-pd','header')
-        const linkColor = document.querySelectorAll('.nav_link')
-        function colorLink(){
-            if(linkColor){
-                linkColor.forEach(l=> l.classList.remove('active'))
-                this.classList.add('active')
-            }
-        }
-        linkColor.forEach(l=> l.addEventListener('click', colorLink))
-        });
-        document.addEventListener("DOMContentLoaded", function(event) {
-            const themeToggle = document.querySelector(".theme-icon");
-            const body = document.body;
-            themeToggle.addEventListener("click", function() {
-                body.classList.toggle("dark-mode");
-                const currentIcon = themeToggle.querySelector("i");
-                currentIcon.classList.toggle("bx-moon");
-                currentIcon.classList.toggle("bx-sun");
-            });
-        });
-    </script>
-@endpush

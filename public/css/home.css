@@ -15,7 +15,7 @@
 }
 /* Light Mode */
 .light-mode {
-    --body-color:#f8f9fa;
+    --body-color:#dbdcde;
     --first-color: #ffffff;
     --first-color-light: #686a71;
     --white-color: #5fcfad;
@@ -43,7 +43,7 @@
     color: rgb(21, 20, 20);
     position: absolute;
     right: 115px;
-    top: 30px;
+    top: 20px;
     align-items: center;
 }
 
@@ -286,7 +286,6 @@ margin-left: -6px;
             color:var(--white-color); /* Your desired text color for the email */
         }
         
-        
         .dropdown:hover > .dropdown-menu {
             -webkit-transform: scaleY(1);
             -ms-transform: scaleY(1);
@@ -343,8 +342,8 @@ margin-left: -6px;
         .avatar {
             position: relative;
             display: inline-block;
-            width: 3rem;
-            height: 3rem;
+            width: 2rem;
+            height: 2rem;
             font-size: 1rem;
         }
 
