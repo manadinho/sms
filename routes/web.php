@@ -16,11 +16,6 @@ Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleC
 Route::get('auth/linkedin/redirect', [LinkedinController::class,   'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 Route::get('auth/linkedin/authenticate', [LinkedInController::class, 'authenticate'])->name('linkedin.authenticate');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard')->name('dashboard');
-});
    
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -45,7 +40,9 @@ Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
     Route::get('/', function () {return view('welcome');})->name('welcome');
-    Route::get('/socials',[HomeController::class, 'network'])->name('socials');
+    Route::group(['prefix' => 'socials', 'as' => 'socials.'], function() {
+        Route::get('/',[HomeController::class, 'network'])->name('index');
+    });
 });
 
 

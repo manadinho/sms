@@ -6,11 +6,11 @@
                 <span class="nav_logo-name">Social 360</span>
             </a>
             <div class="nav_list">
-                <a href="#" class="nav_link active">
+                <a href="#" class="nav_link">
                     <i class="bx bx-home nav_icon"></i>
                     <span class="nav_name">Planner</span>
                 </a>
-                <a href="{{ route('socials') }}" class="nav_link">
+                <a href="{{ route('socials.index') }}" class="nav_link {{request()->route()->getPrefix() === '/socials' ? 'active' : ''}}">
                     <i class="bx bx-message-square-detail nav_icon"></i>
                     <span class="nav_name">Socials</span>
                 </a>
