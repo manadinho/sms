@@ -218,37 +218,3 @@ font-size: larger;
 color: #868e96; 
 text-decoration: underline; 
 }
-
-/* Started.css */
-.container {
-  margin-top: 50px;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.image {
-  width: 300px;
-  height: auto;
-  margin-bottom: 20px;
-}
-.text {
-font-size: 20px;
-margin-bottom: 30px;
-text-align: center;
-max-width: 600px; 
-margin-left: auto; 
-margin-right: auto;
-color: #868e96; 
-}
-.button-submit {
-background-color: #12b886;
-color: #fff;
-padding: 13px;
-border: none;
-border-radius:0.5rem;
-cursor: pointer;
-width: 50%;
-text-decoration: none;
-text-align: center;
-}
