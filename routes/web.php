@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
 Route::group(['prefix' => 'connect', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'connect'])->name('facebook.connect');
     Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
-    Route::get('/linkedin', [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin.connect');
+    Route::get('/linkedin', [LinkedinController::class, 'connect'])->name('linkedin.connect');
 });
 
 Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
