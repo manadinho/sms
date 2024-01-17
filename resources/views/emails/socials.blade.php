@@ -32,7 +32,7 @@
           <div class="card-body">
             <h5 class="card-title">Facebook</h5>
             <p class="card-text">Schedule and analyze posts on Facebook Pages or Groups</p>
-            <a href="#" class="btn custom-connect-btn">Connect</a>
+            <a href="{{ route('facebook.connect') }}" class="btn custom-connect-btn">Connect</a>
           </div>
         </div>
   
