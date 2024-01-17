@@ -51,19 +51,24 @@ class LinkedinController extends Controller
         }
     }
 
-    public function authenticate()
+    public function connect()
     {
-        $clientId = env('LINKEDIN_CLIENT_ID');
-        $clientSecret = env('LINKEDIN_CLIENT_SECRET');
-        $redirectUri = env('LINKEDIN_REDIRECT_URL');
-
-        $authorizationUrl = 'https://www.linkedin.com/oauth/v2/authorization?' . http_build_query([
-            'response_type' => 'code',
-            'client_id' => $clientId,
-            'redirect_uri' => $redirectUri,
-            'scope' => 'openid profile email',
-            ]);
-
-        return redirect($authorizationUrl);
+        return redirect()->to("https://www.linkedin.com/oauth/v2/authorization?response_type=" . "code" ."&client_id". env('LINKEDIN_CLIENT_ID') . "&redirect_uri=" . env('LINKEDIN_REDIRECT_URL') . "&scope=" . "openid profile email" . "");
     }
+
+    // public function authenticate()
+    // {
+    //     $clientId = env('LINKEDIN_CLIENT_ID');
+    //     $clientSecret = env('LINKEDIN_CLIENT_SECRET');
+    //     $redirectUri = ;
+
+    //     $authorizationUrl = 'https://www.linkedin.com/oauth/v2/authorization?' . http_build_query([
+    //         'response_type' => 'code',
+    //         'client_id' => $clientId,
+    //         'redirect_uri' => ,
+    //         'scope' => ,
+    //         ]);
+
+    //     return redirect($authorizationUrl);
+    // }
 }
