@@ -11,6 +11,6 @@ class HomeController extends Controller
     }
 
     public function network() {
-        return view('emails.socials');
+        return view('views.socials');
     }
 }

@@ -75,6 +75,9 @@
   margin-left: 30px;
   font-weight: bold;
 }
+.card{
+  margin-top: 8px !important;
+}
 
 body {
   position: relative;

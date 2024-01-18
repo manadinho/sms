@@ -15,5 +15,37 @@
 <body>
     @yield('content')
     @stack('script')
+    <script>
+        const passwordLink = document.getElementById('passwordLink');
+        const passwordField = document.getElementById('passwordField');
+        const signInButton = document.getElementById('signInButton');
+
+        passwordLink.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (passwordField.style.display === 'none') {
+                passwordField.style.display = 'block';
+                signInButton.style.display = 'block'; 
+            } else {
+                passwordField.style.display = 'none';
+                signInButton.style.display = 'none'; 
+            }
+        });
+
+        function togglePassword() {
+            const passwordInput = document.querySelector('.password-input');
+            const toggleIcon = document.querySelector('.toggle-password');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        }
+    </script>
 </body>
 </html>
