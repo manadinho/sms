@@ -39,7 +39,7 @@ Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
-    Route::get('/', function () {return view('welcome');})->name('welcome');
+    Route::get('/', function () {return view('views.welcome');})->name('welcome');
     Route::group(['prefix' => 'socials', 'as' => 'socials.'], function() {
         Route::get('/',[HomeController::class, 'network'])->name('index');
     });

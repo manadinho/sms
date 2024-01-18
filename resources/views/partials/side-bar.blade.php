@@ -6,7 +6,7 @@
                 <span class="nav_logo-name">Social 360</span>
             </a>
             <div class="nav_list">
-                <a href="#" class="nav_link">
+                <a href="{{ route('welcome') }}" class="nav_link {{ request()->route()->getPrefix() === '' ? 'active' : '' }}">
                     <i class="bx bx-home nav_icon"></i>
                     <span class="nav_name">Planner</span>
                 </a>
