@@ -8,9 +8,15 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Exceptions;
+use App\Http\Traits\LinkedinTrait;
 
 class LinkedinController extends Controller
 {
+    use LinkedinTrait;
+    private $code = null;
+    private $accessToken = null;
+    private $expiresAt = null;
+    
     public function redirectToLinkedin()
     {
         return Socialite::driver('linkedin-openid')->redirect();
@@ -53,22 +59,14 @@ class LinkedinController extends Controller
 
     public function connect()
     {
-        return redirect()->to("https://www.linkedin.com/oauth/v2/authorization?response_type=" . "code" ."&client_id". env('LINKEDIN_CLIENT_ID') . "&redirect_uri=" . env('LINKEDIN_REDIRECT_URL') . "&scope=" . "openid profile email" . "");
+        return redirect()->to("https://www.linkedin.com/oauth/v2/authorization?response_type=" . "code" ."&client_id=". env('LINKEDIN_CLIENT_ID') . "&redirect_uri=" . env('LINKEDIN_CONNECT_REDIRECT_URL') . "&scope=" . env('LINKEDIN_SCOPES') . "");
     }
 
-    // public function authenticate()
-    // {
-    //     $clientId = env('LINKEDIN_CLIENT_ID');
-    //     $clientSecret = env('LINKEDIN_CLIENT_SECRET');
-    //     $redirectUri = ;
-
-    //     $authorizationUrl = 'https://www.linkedin.com/oauth/v2/authorization?' . http_build_query([
-    //         'response_type' => 'code',
-    //         'client_id' => $clientId,
-    //         'redirect_uri' => ,
-    //         'scope' => ,
-    //         ]);
-
-    //     return redirect($authorizationUrl);
-    // }
+    public function callback(){
+        $this->code = request()->query('code');
+        $data = $this->getLinkedinAccessToken();
+        $this->accessToken = $data['access_token'];
+        $profile = $this->getProfile();
+        dd($profile);
+    }
 }
