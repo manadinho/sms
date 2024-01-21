@@ -39,13 +39,86 @@ trait LinkedinTrait
                 ],
             ]);            
 
-            return json_decode((string) $response->getBody(), true);
-        } catch (\Exception $e) {
-            // Handle exceptions (e.g., GuzzleHttp\Exception\RequestException)
+            $profile =  json_decode((string) $response->getBody(), true);
             return [
-                'error' => true,
-                'message' => $e->getMessage(),
+                'id' => $profile['id'],
+                'name' => $profile['localizedFirstName'] . ' ' . $profile['localizedLastName'],
             ];
+        } catch (\Exception $e) {
+            throw $e;
         }
+    }
+
+    private function fetchEmail()
+    {
+        $client = new Client();
+        try {
+            $response = $client->get("https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))", [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->accessToken,
+                ],
+            ]);            
+
+            return json_decode((string) $response->getBody(), true)['elements'][0]['handle~']['emailAddress'];
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    private function saveProfile($profile): void
+    {
+        if ($this->profileExists($profile)) {
+            $this->updateProfile($profile);
+            return;
+        }
+
+        $this->createProfile($profile);
+    }
+
+    private function profileExists($profile): bool
+    {
+        return UserSocialProfile::where(['provider' => 'LINKEDIN', 'provider_id' => $profile['id'], 'user_id' => auth()->id()])
+            ->exists();
+    }
+
+    private function updateProfile($profile): void
+    {
+        $social_profile = [
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->refreshToken,
+            'expires_at' => $this->expiresAt,
+            'refresh_token_expires_at' => $this->refreshTokenExpiresAt,
+            'name' => $profile['name'],
+        ];
+
+        UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id()])->update($social_profile);
+    }
+
+    private function createProfile($profile): void
+    {
+        $social_profile = [
+            'provider' => 'LINKEDIN',
+            'provider_id' => $profile['id'],
+            'user_id' => auth()->user()->id,
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->refreshToken,
+            'refresh_token_expires_at' => $this->refreshTokenExpiresAt,
+            'expires_at' => $this->expiresAt,
+            'email' => $this->fetchEmail(),
+            'name' => $profile['name'],
+        ];
+
+        UserSocialProfile::create($social_profile);
+    }
+
+    /**
+     * Calculate expiration date by adding number of seconds to current time.
+     *
+     * @param int $seconds Number of seconds to add 
+     * @return \Illuminate\Support\Carbon Expiration date/time  
+     */
+    private function expirationDate($seconds)
+    {
+        return Carbon::now()->addSeconds($seconds)->subDays(5);
     }
 }

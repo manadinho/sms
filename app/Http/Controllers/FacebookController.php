@@ -19,7 +19,7 @@ class FacebookController extends Controller
      */
     public function connect()
     {
-        return redirect()->to("https://www.facebook.com/v15.0/dialog/oauth?client_id=" . env('FACEBOOK_APP_ID') . "&redirect_uri=" . env('FACEBOOK_REDIRECT_URL') . "&scope=" . env('FACEBOOK_SCOPES') . "");
+        return redirect()->to("https://www.facebook.com/".env('FACEBOOK_API_VERSION')."/dialog/oauth?client_id=" . env('FACEBOOK_APP_ID') . "&redirect_uri=" . env('FACEBOOK_REDIRECT_URL') . "&scope=" . env('FACEBOOK_SCOPES') . "");
     }
 
     /**
@@ -30,13 +30,16 @@ class FacebookController extends Controller
      */
     public function callback()
     {
-        $this->code = request()->query('code');
-        $data = $this->getFacebookAccessToken();
-        $this->accessToken = $data['access_token'];
-        // $this->expiresAt = $this->expirationDate($data['expires_in']);
-        $profile = $this->getProfile();
-        $this->saveProfile($profile);
-        $pages = $this->getPages();
-        dd($pages);
+        try {
+            $this->code = request()->query('code');
+            $data = $this->getFacebookAccessToken();
+            $this->accessToken = $data['access_token'];
+            $this->expiresAt = $this->expirationDate((array_key_exists('expires_in', $data) ? $data['expires_in'] : null));
+            $profile = $this->getProfile();
+            $this->saveProfile($profile);
+            return redirect()->route('socials.index', ['connectstatus' => 'true', 'provider' => 'facebook']);
+        } catch (\Exception $e) {
+            return redirect()->route('socials.index', ['connectstatus' => 'false', 'provider' => 'facebook', 'message' => $e->getMessage()]);
+        }
     }
 }

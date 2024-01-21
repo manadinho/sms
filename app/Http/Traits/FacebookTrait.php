@@ -23,12 +23,13 @@ trait FacebookTrait
         $client = new Client();
 
         try {
-            $response = $client->post('https://graph.facebook.com/v15.0/oauth/access_token', [
+            $response = $client->post('https://graph.facebook.com/'.env('FACEBOOK_API_VERSION').'/oauth/access_token', [
                 'form_params' => [
                     'client_id' => env('FACEBOOK_APP_ID'),
                     'client_secret' => env('FACEBOOK_APP_SECRET'),
                     'redirect_uri' => env('FACEBOOK_REDIRECT_URL'),
                     'code' => $this->code,
+                    'grant_type' => 'authorization_code'
                 ],
             ]);
 
@@ -51,7 +52,7 @@ trait FacebookTrait
     {
         try {
             $client = new Client();
-            $response = $client->get("https://graph.facebook.com/v15.0/me?fields=id,name,first_name,last_name,email&access_token=" . $this->accessToken);
+            $response = $client->get("https://graph.facebook.com/".env('FACEBOOK_API_VERSION')."/me?fields=id,name,first_name,last_name,email&access_token=" . $this->accessToken);
             return json_decode((string) $response->getBody(), true);
         } catch (\Exception $e) {
             // Handle exception or log error
@@ -67,7 +68,11 @@ trait FacebookTrait
      */
     private function expirationDate($seconds)
     {
-        return Carbon::now()->addSeconds($seconds);
+        if ($seconds === null) {
+            return Carbon::now()->addDays(55);
+        }
+
+        return Carbon::now()->addSeconds($seconds)->subDays(5);
     }
 
     /**
@@ -127,7 +132,8 @@ trait FacebookTrait
      * Update an existing user social profile with new Facebook profile data.
      * 
      * @param array $profile The updated Facebook profile data
-     */    private function updateProfile($profile): void
+     */    
+    private function updateProfile($profile): void
     {
         $social_profile = [
             'access_token' => $this->accessToken,
@@ -143,9 +149,8 @@ trait FacebookTrait
     private function getPages()
     {
         try {
-            // https://graph.facebook.com/v15.0/me/accounts?access_token=EAAHMArQUWR4BO2i9l0tZBcCrZA9dx33ZBJoQ0ixwR4O3tW3q0TlQvGooKJFyVSLgoM89RdjJMVl2xzsxPnTIoZCq86VENWP1ahaeB8YdXoZBOH3WZCtNOq2jKcAJFlZCiewPh38c0035qIMN3c0KmikLUOasuICvLLQDiuZBYaUeyP6ccJR6uSWhSSfjhnCIZBZCbjFdqtuqz4Nc49ols6grL7IM70SjuIzCSc7AhCIqYqo7JoBiQlYZBQY&fields=id,name,access_token,category_list,username,link,cover,picture,tasks,location{street,city,city_id,state,zip,country,region,region_id}
             $client = new Client();
-            $response = $client->get("https://graph.facebook.com/v15.0/me/accounts?access_token=" . $this->accessToken. "&fields=id,name,access_token,category_list,username,link,cover,picture,tasks,location{street,city,city_id,state,zip,country,region,region_id}");
+            $response = $client->get("https://graph.facebook.com/".env('FACEBOOK_API_VERSION')."/me/accounts?access_token=" . $this->accessToken. "&fields=id,name,access_token,category_list,username,link,cover,picture,tasks,location{street,city,city_id,state,zip,country,region,region_id}");
             return json_decode((string) $response->getBody(), true);
         } catch (\Exception $e) {
             // Handle exception or log error

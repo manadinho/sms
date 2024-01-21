@@ -15,7 +15,9 @@ class LinkedinController extends Controller
     use LinkedinTrait;
     private $code = null;
     private $accessToken = null;
+    private $refreshToken = null;
     private $expiresAt = null;
+    private $refreshTokenExpiresAt = null;
     
     public function redirectToLinkedin()
     {
@@ -59,14 +61,22 @@ class LinkedinController extends Controller
 
     public function connect()
     {
-        return redirect()->to("https://www.linkedin.com/oauth/v2/authorization?response_type=" . "code" ."&client_id=". env('LINKEDIN_CLIENT_ID') . "&redirect_uri=" . env('LINKEDIN_CONNECT_REDIRECT_URL') . "&scope=" . env('LINKEDIN_SCOPES') . "");
+        return redirect()->to("https://www.linkedin.com/oauth/v2/authorization?response_type=" . "code" ."&client_id=". env('LINKEDIN_CLIENT_ID') . "&redirect_uri=" . env('LINKEDIN_CONNECT_REDIRECT_URL') . "&scope=" . env('LINKEDIN_SCOPES_PROFILE') . "");
     }
 
     public function callback(){
-        $this->code = request()->query('code');
-        $data = $this->getLinkedinAccessToken();
-        $this->accessToken = $data['access_token'];
-        $profile = $this->getProfile();
-        dd($profile);
+        try{
+            $this->code = request()->query('code');
+            $data = $this->getLinkedinAccessToken();
+            $this->expiresAt = $this->expirationDate($data['expires_in']);
+            $this->refreshTokenExpiresAt = $this->expirationDate($data['refresh_token_expires_in']);
+            $this->accessToken = $data['access_token'];
+            $this->refreshToken = $data['refresh_token'];
+            $profile = $this->getProfile();
+            $this->saveProfile($profile);
+            return redirect()->route('socials.index', ['connectstatus' => 'true', 'provider' => 'linkedin']);
+        } catch (\Exception $e) {
+            return redirect()->route('socials.index', ['connectstatus' => 'false', 'provider' => 'linkedin', 'message' => $e->getMessage()]);
+        }
     }
 }
