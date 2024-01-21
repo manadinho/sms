@@ -92,6 +92,13 @@
                 }
             });
         });
+
+        function getLoaderComponent(){
+            const imagesrc = "{{ asset('/images/loader/loader.gif') }}";
+            return `<div style="display:flex; justify-content:center">
+                    <img src="${imagesrc}" alt="Loading...">
+                    </div>`;
+        }
     </script>
 </body>
 </html>

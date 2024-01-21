@@ -8,6 +8,7 @@ use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SocialController;
 
 Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
@@ -34,14 +35,16 @@ Route::group(['prefix' => 'connect', 'middleware' => 'auth'], function() {
 Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'callback'])->name('facebook.callback');
     Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
-    Route::get('/linkedin', [LinkedinController::class, 'redirectToLinkedin'])->name('linkedin');
+    Route::get('/linkedin', [LinkedinController::class, 'callback'])->name('linkedin.callback');
 });
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
-    Route::get('/', function () {return view('views.welcome');})->name('welcome');
+    Route::get('/', function () {return view('welcome');})->name('welcome');
     Route::group(['prefix' => 'socials', 'as' => 'socials.'], function() {
-        Route::get('/',[HomeController::class, 'network'])->name('index');
+        Route::get('/',[SocialController::class, 'index'])->name('index');
+        Route::post('/search-entities',[SocialController::class, 'searchEntities'])->name('search-entities');
+        Route::post('/connect-entities',[SocialController::class, 'connectEntities'])->name('connect-entities');
     });
 });
 

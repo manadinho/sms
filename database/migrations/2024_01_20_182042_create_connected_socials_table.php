@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_social_profiles', function (Blueprint $table) {
+        Schema::create('connected_socials', function (Blueprint $table) {
             $table->id();
-            $table->string('provider');
-            $table->string('provider_id');
             $table->integer('user_id');
+            $table->integer('user_social_profile_id');
+            $table->string('provider');
+            $table->string('connected_social_id');
+            $table->string('type');
+            $table->string('title');
             $table->longText('access_token')->nullable();
-            $table->longText('refresh_token')->nullable();
-            $table->dateTime('expires_at')->nullable();
-            $table->dateTime('refresh_token_expires_at')->nullable();
-            $table->string('email');
-            $table->string('name');
+            $table->text('photo')->nullable();
+            $table->longText('misc');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_social_profiles');
+        Schema::dropIfExists('connected_socials');
     }
 };

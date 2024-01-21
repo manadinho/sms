@@ -29,7 +29,7 @@ class GoogleLoginController extends Controller
             }
 
             Auth::login($user);
-            return redirect('/home')->with('success', 'User Logged in!');
+            return redirect()->route('welcome')->with('success', 'User Logged in!');
         }
          catch(\Exception $e) 
             {
