@@ -2,14 +2,14 @@
     <li class="dropdown ml-2">
         <a class="rounded-circle " href="#" role="button" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-md avatar-indicators avatar-online">
-                <img alt="avatar" src="{{ asset('images/logo.png') }}" class="rounded-circle">
+                <img alt="avatar" src="{{ asset('images/boy.png') }}" class="rounded-circle">
             </div>
         </a>
         <div class="dropdown-menu pb-2" aria-labelledby="dropdownUser">
             <div class="dropdown-item">
                 <div class="d-flex py-2">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                        <img alt="avatar" src="{{ asset('images/logo.png') }}" class="rounded-circle">
+                        <img alt="avatar" src="{{ asset('images/boy.png') }}" class="rounded-circle">
                     </div>
                     <div class="ml-3 lh-1">
                         <h5 class="mb-0 profile-name">Social360</h5>
