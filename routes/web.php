@@ -17,7 +17,7 @@ Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleC
 Route::get('auth/linkedin/redirect', [LinkedinController::class,   'redirectToLinkedin'])->name('linkedin.redirect');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'handleLinkedinCallback'])->name('linkedin.callback');
 Route::get('auth/linkedin/authenticate', [LinkedInController::class, 'authenticate'])->name('linkedin.authenticate');
-   
+
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -41,6 +41,9 @@ Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
     Route::get('/', function () {return view('welcome');})->name('welcome');
+    Route::get('/ecommerce', function () {return view('ecommerce');})->name('ecommerce');
+    Route::get('/setting', function () {return view('setting');})->name('setting');
+    Route::get('/analytics', function () {return view('analytics');})->name('analytics');
     Route::group(['prefix' => 'socials', 'as' => 'socials.'], function() {
         Route::get('/',[SocialController::class, 'index'])->name('index');
         Route::post('/search-entities',[SocialController::class, 'searchEntities'])->name('search-entities');

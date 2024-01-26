@@ -18,11 +18,11 @@
                     <i class="bx bx-refresh nav_icon"></i>
                     <span class="nav_name">Automation</span>
                 </a>
-                <a href="#" class="nav_link">
+                <a href="{{ route('ecommerce') }}" class="nav_link {{request()->route()->getPrefix() === '/ecommerce' ? 'active' : ''}}">
                     <i class="bx bx-shopping-bag  nav_icon"></i>
                     <span class="nav_name">Ecommerce</span>
                 </a>
-                <a href="#" class="nav_link">
+                <a href="{{ route('analytics') }}" class="nav_link {{request()->route()->getPrefix() === '/analytics' ? 'active' : ''}}">
                     <i class="bx bx-bar-chart-alt nav_icon"></i>
                     <span class="nav_name">Analytics</span>
                 </a>
@@ -30,7 +30,7 @@
                     <i class="bx bx-wrench nav_icon"></i>
                     <span class="nav_name">AI Tool</span>
                 </a>
-                <a href="#" class="nav_link">
+                <a href="{{ route('setting') }}" class="nav_link {{request()->route()->getPrefix() === '/setting' ? 'active' : ''}}">
                     <i class="bx bx-cog nav_icon nav_icon"></i>
                     <span class="nav_name">Settings</span>
                 </a>
