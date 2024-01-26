@@ -6,7 +6,7 @@ use App\Models\UserSocialProfile;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 
-trait FacebookTrait 
+trait InstagramTrait 
 {
     /**
      * Get Facebook access token using authorization code.
@@ -18,16 +18,16 @@ trait FacebookTrait
      * The response body containing the access token is JSON decoded and returned.
      * If request fails, null is returned.
      */
-    private function getFacebookAccessToken()
+    private function getInstagramAccessToken()
     {
         $client = new Client();
 
         try {
             $response = $client->post('https://graph.facebook.com/'.env('FACEBOOK_API_VERSION').'/oauth/access_token', [
                 'form_params' => [
-                    'client_id' => env('FACEBOOK_APP_ID'),
-                    'client_secret' => env('FACEBOOK_APP_SECRET'),
-                    'redirect_uri' => env('FACEBOOK_REDIRECT_URL'),
+                    'client_id' => env('INSTAGRAM_APP_ID'),
+                    'client_secret' => env('INSTAGRAM_APP_SECRET'),
+                    'redirect_uri' => env('INSTAGRAM_REDIRECT_URL'),
                     'code' => $this->code,
                     'grant_type' => 'authorization_code'
                 ],
@@ -48,7 +48,7 @@ trait FacebookTrait
      * The response body containing the user data is JSON decoded and returned.
      * If request fails, null is returned.  
      */    
-    private function getProfile()
+    private function getFacebookProfile()
     {
         try {
             $client = new Client();
@@ -121,7 +121,7 @@ trait FacebookTrait
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => 'dummy1814',
+            'email' => $profile['email'] ?? 'dummy@example.com',
             'name' => $profile['name'],
         ];
 
@@ -139,7 +139,7 @@ trait FacebookTrait
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => $profile['email'],
+            'email' => $profile['email'] ?? 'dummy@example.com',
             'name' => $profile['name'],
         ];
 
@@ -156,5 +156,38 @@ trait FacebookTrait
             // Handle exception or log error
             return null;
         }
+    }
+
+    private function createInstagramProfile($profile): void
+    {
+        $social_profile = [
+            'provider' => 'INSTAGRAM',
+            'provider_id' => $profile['id'],
+            'user_id' => auth()->user()->id,
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->accessToken,
+            'expires_at' => $this->expiresAt,
+            'email' => $profile['email'] ?? 'dummy@example.com',
+            'name' => $profile['name'],
+        ];
+        UserSocialProfile::create($social_profile);
+    }
+
+    private function getInstagramProfile()
+    {
+        try {
+            $fbProfileId = $this->profileId;
+            $client = new Client();
+            $fields = 'instagram_business_account';
+            $response = $client->get("https://graph.facebook.com/" . env('FACEBOOK_API_VERSION') . "/{$fbProfileId}?fields={$fields}&access_token=" . $this->accessToken);
+            return json_decode((string) $response->getBody(), true);
+        } catch (\Exception $e) {
+            // Handle exception or log error
+            return [
+                'error' => null,
+                'message' => $e,
+            ];
+        }
+        
     }
 }

@@ -117,7 +117,7 @@
                           <div class="card-body">
                             <h5 class="card-title">Instagram</h5>
                             <p class="card-text">Schedule and analyze posts on Instagram Business Profiles</p>
-                            <a href="#" class="btn custom-connect-btn">Connect</a>
+                            <a href="{{ route('instagram.connect') }}" class="btn custom-connect-btn">Connect</a>
                           </div>
                         </div>
                         <div class="card">
