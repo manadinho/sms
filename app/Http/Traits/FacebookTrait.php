@@ -121,7 +121,7 @@ trait FacebookTrait
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => 'dummy1814',
+            'email' => $profile['email'] ?? 'sms@sms.com',
             'name' => $profile['name'],
         ];
 
