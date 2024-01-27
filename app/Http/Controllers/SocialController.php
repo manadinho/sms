@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\FacebookService;
+use App\Http\Services\InstagramService;
 use App\Http\Services\LinkedinService;
 use App\Models\ConnectedSocial;
 use App\Models\UserSocialProfile;
@@ -28,6 +29,28 @@ class SocialController extends Controller
         if($provider == 'LINKEDIN') {
             return $this->searchLinkedinEntities();
         }
+
+        if($provider == 'INSTAGRAM') {
+            return $this->searchInstagramEntities();
+        }
+    }
+
+    private function searchInstagramEntities() 
+    {
+        $instagramService = new InstagramService();
+        $instagramLatetProfile = UserSocialProfile::where(['user_id' => auth()->user()->id, 'provider' => 'INSTAGRAM'])->orderBy('updated_at', 'desc')->first();
+        $accounts = $instagramService->fetchAccounts($instagramLatetProfile);
+        $html = ($accounts) ? "":'<div class="text-center"><small>No Group Found</small></div>';
+        $connectedSocials = ConnectedSocial::where(['user_id' => auth()->user()->id, 'user_social_profile_id' => $instagramLatetProfile->id, 'provider' => 'INSTAGRAM', 'type' => 'account'])->pluck('connected_social_id')->toArray();
+        foreach ($accounts as $entity) {
+            $html .= view('socials.partials.instagram-entity', compact('entity', 'connectedSocials'))->render();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html
+        ], 200);
+
     }
 
     private function searchFacebookEntities() 
@@ -130,6 +153,18 @@ class SocialController extends Controller
             }, request()->entities);
 
             ConnectedSocial::where(['user_id' => auth()->user()->id, 'user_social_profile_id' => $linkedinLatetProfile->id, 'provider' => 'LINKEDIN', 'type' => request()->type])->delete();
+            ConnectedSocial::insert($preparedEntities);
+        }
+
+        if($provider == 'INSTAGRAM') {
+            $instagramService = new InstagramService();
+            $instagramLatetProfile = UserSocialProfile::where(['user_id' => auth()->user()->id, 'provider' => 'INSTAGRAM'])->orderBy('updated_at', 'desc')->first();
+            
+            $preparedEntities = array_map(function($entity) use ($instagramService, $instagramLatetProfile) {
+                return $instagramService->preparePageToCreate($entity, $instagramLatetProfile);
+            }, request()->entities);
+
+            ConnectedSocial::where(['user_id' => auth()->user()->id, 'user_social_profile_id' => $instagramLatetProfile->id, 'provider' => 'INSTAGRAM', 'type' => 'account'])->delete();
             ConnectedSocial::insert($preparedEntities);
         }
 

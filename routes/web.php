@@ -7,6 +7,7 @@ use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialController;
 
@@ -30,12 +31,14 @@ Route::group(['prefix' => 'connect', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'connect'])->name('facebook.connect');
     Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
     Route::get('/linkedin', [LinkedinController::class, 'connect'])->name('linkedin.connect');
+    Route::get('/instagram', [InstagramController::class, 'connect'])->name('instagram.connect');
 });
 
 Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'callback'])->name('facebook.callback');
     Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
     Route::get('/linkedin', [LinkedinController::class, 'callback'])->name('linkedin.callback');
+    Route::get('/instagram', [InstagramController::class, 'callback'])->name('instagram.callback');
 });
 
 Route::group(['middleware' => ['auth']], function() {

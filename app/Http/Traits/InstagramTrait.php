@@ -6,28 +6,28 @@ use App\Models\UserSocialProfile;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 
-trait FacebookTrait
+trait InstagramTrait 
 {
     /**
      * Get Facebook access token using authorization code.
      *
-     * This makes a POST request to the Facebook OAuth token endpoint to exchange
-     * the authorization code for an access token. Required parameters like app ID,
+     * This makes a POST request to the Facebook OAuth token endpoint to exchange 
+     * the authorization code for an access token. Required parameters like app ID, 
      * app secret, redirect URI and authorization code are passed in the form body.
-     *
+     * 
      * The response body containing the access token is JSON decoded and returned.
      * If request fails, null is returned.
      */
-    private function getFacebookAccessToken()
+    private function getInstagramAccessToken()
     {
         $client = new Client();
 
         try {
             $response = $client->post('https://graph.facebook.com/'.env('FACEBOOK_API_VERSION').'/oauth/access_token', [
                 'form_params' => [
-                    'client_id' => env('FACEBOOK_APP_ID'),
-                    'client_secret' => env('FACEBOOK_APP_SECRET'),
-                    'redirect_uri' => env('FACEBOOK_REDIRECT_URL'),
+                    'client_id' => env('INSTAGRAM_APP_ID'),
+                    'client_secret' => env('INSTAGRAM_APP_SECRET'),
+                    'redirect_uri' => env('INSTAGRAM_REDIRECT_URL'),
                     'code' => $this->code,
                     'grant_type' => 'authorization_code'
                 ],
@@ -39,16 +39,16 @@ trait FacebookTrait
             return null;
         }
     }
-
+    
     /**
      * Get user profile from Facebook API.
      *
-     * This makes a GET request to the Facebook user profile endpoint to get
+     * This makes a GET request to the Facebook user profile endpoint to get 
      * details like id, name, first_name, last_name, email using the access token.
      * The response body containing the user data is JSON decoded and returned.
-     * If request fails, null is returned.
-     */
-    private function getProfile()
+     * If request fails, null is returned.  
+     */    
+    private function getFacebookProfile()
     {
         try {
             $client = new Client();
@@ -63,8 +63,8 @@ trait FacebookTrait
     /**
      * Calculate expiration date by adding number of seconds to current time.
      *
-     * @param int $seconds Number of seconds to add
-     * @return \Illuminate\Support\Carbon Expiration date/time
+     * @param int $seconds Number of seconds to add 
+     * @return \Illuminate\Support\Carbon Expiration date/time  
      */
     private function expirationDate($seconds)
     {
@@ -78,10 +78,10 @@ trait FacebookTrait
     /**
      * Save Facebook profile data.
      *
-     * Checks if a profile already exists for the user.
+     * Checks if a profile already exists for the user. 
      * If yes, updates the existing profile.
      * If no, creates a new profile.
-     *
+     * 
      * @param array $profile The Facebook profile data
      */
     private function saveProfile($profile): void
@@ -102,8 +102,7 @@ trait FacebookTrait
      */
     private function profileExists($profile): bool
     {
-        return UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id()])
-            ->where('provider', 'FACEBOOK')
+        return UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id(), 'provider' => 'INSTAGRAM'])
             ->exists();
     }
 
@@ -115,13 +114,13 @@ trait FacebookTrait
     private function createProfile($profile): void
     {
         $social_profile = [
-            'provider' => 'FACEBOOK',
+            'provider' => 'INSTAGRAM',
             'provider_id' => $profile['id'],
             'user_id' => auth()->user()->id,
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => $profile['email'] ?? 'sms@sms.com',
+            'email' => $profile['email'],
             'name' => $profile['name'],
         ];
 
@@ -130,9 +129,9 @@ trait FacebookTrait
 
     /**
      * Update an existing user social profile with new Facebook profile data.
-     *
+     * 
      * @param array $profile The updated Facebook profile data
-     */
+     */    
     private function updateProfile($profile): void
     {
         $social_profile = [
@@ -143,7 +142,7 @@ trait FacebookTrait
             'name' => $profile['name'],
         ];
 
-        UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id()])->update($social_profile);
+        UserSocialProfile::where(['provider_id' => $profile['id'], 'provider' => 'INSTAGRAM', 'user_id' => auth()->id()])->update($social_profile);
     }
 
     private function getPages()
@@ -157,4 +156,21 @@ trait FacebookTrait
             return null;
         }
     }
+
+    private function createInstagramProfile($profile): void
+    {
+        $social_profile = [
+            'provider' => 'INSTAGRAM',
+            'provider_id' => $profile['id'],
+            'user_id' => auth()->user()->id,
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->accessToken,
+            'expires_at' => $this->expiresAt,
+            'email' => $profile['email'],
+            'name' => $profile['name'],
+        ];
+        UserSocialProfile::create($social_profile);
+    }
+
+        
 }

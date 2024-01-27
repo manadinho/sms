@@ -72,7 +72,7 @@
                           <div class="card-body">
                             <h5 class="card-title">Instagram</h5>
                             <p class="card-text">Schedule and analyze posts on Instagram Business Profiles</p>
-                            <a href="#" class="btn custom-connect-btn">Connect</a>
+                            <a href="{{ route('instagram.connect') }}" class="btn custom-connect-btn">Connect</a>
                           </div>
                         </div>
                         <div class="card">
@@ -116,6 +116,7 @@
 
 @include('socials.partials.fb-social-connect-modal')
 @include('socials.partials.linkedin-social-connect-modal')
+@include('socials.partials.instagram-social-connect-modal')
 @endsection
 
 @push('script')
@@ -132,6 +133,10 @@
 
             if(window.PROVIDER == 'linkedin') {
                 $('#linkedin-modal').modal('show');
+            } 
+
+            if(window.PROVIDER == 'instagram') {
+                $('#instagram-modal').modal('show');
             }
         });
 
