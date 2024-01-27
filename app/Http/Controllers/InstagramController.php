@@ -36,17 +36,10 @@ class InstagramController extends Controller
             $this->accessToken = $data['access_token'];
             $this->expiresAt = $this->expirationDate((array_key_exists('expires_in', $data) ? $data['expires_in'] : null));
             $profile = $this->getFacebookProfile();
-            $this->profileId = $profile['id'];
             $this->saveProfile($profile);
-            $instagramProfile = $this->getInstagramProfile();
-            dd($instagramProfile);
             return redirect()->route('socials.index', ['connectstatus' => 'true', 'provider' => 'instagram']);
         } catch (\Exception $e) {
-            // return redirect()->route('socials.index', ['connectstatus' => 'false', 'provider' => 'instagram', 'message' => $e->getMessage()]);
-            return [
-                'error' => null,
-                'message' => $e->getMessage(),
-            ];
+            return redirect()->route('socials.index', ['connectstatus' => 'false', 'provider' => 'instagram', 'message' => $e->getMessage()]);
         }
     }
 }

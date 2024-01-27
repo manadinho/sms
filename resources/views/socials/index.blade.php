@@ -161,6 +161,7 @@
 
 @include('socials.partials.fb-social-connect-modal')
 @include('socials.partials.linkedin-social-connect-modal')
+@include('socials.partials.instagram-social-connect-modal')
 @endsection
 
 @push('script')
@@ -177,6 +178,10 @@
 
             if(window.PROVIDER == 'linkedin') {
                 $('#linkedin-modal').modal('show');
+            } 
+
+            if(window.PROVIDER == 'instagram') {
+                $('#instagram-modal').modal('show');
             } 
         });
 

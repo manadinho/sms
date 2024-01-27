@@ -102,8 +102,7 @@ trait InstagramTrait
      */
     private function profileExists($profile): bool
     {
-        return UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id()])
-            ->where('provider', 'FACEBOOK')
+        return UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id(), 'provider' => 'INSTAGRAM'])
             ->exists();
     }
 
@@ -115,13 +114,13 @@ trait InstagramTrait
     private function createProfile($profile): void
     {
         $social_profile = [
-            'provider' => 'FACEBOOK',
+            'provider' => 'INSTAGRAM',
             'provider_id' => $profile['id'],
             'user_id' => auth()->user()->id,
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => $profile['email'] ?? 'dummy@example.com',
+            'email' => $profile['email'],
             'name' => $profile['name'],
         ];
 
@@ -139,11 +138,11 @@ trait InstagramTrait
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => $profile['email'] ?? 'dummy@example.com',
+            'email' => $profile['email'],
             'name' => $profile['name'],
         ];
 
-        UserSocialProfile::where(['provider_id' => $profile['id'], 'user_id' => auth()->id()])->update($social_profile);
+        UserSocialProfile::where(['provider_id' => $profile['id'], 'provider' => 'INSTAGRAM', 'user_id' => auth()->id()])->update($social_profile);
     }
 
     private function getPages()
@@ -167,27 +166,11 @@ trait InstagramTrait
             'access_token' => $this->accessToken,
             'refresh_token' => $this->accessToken,
             'expires_at' => $this->expiresAt,
-            'email' => $profile['email'] ?? 'dummy@example.com',
+            'email' => $profile['email'],
             'name' => $profile['name'],
         ];
         UserSocialProfile::create($social_profile);
     }
 
-    private function getInstagramProfile()
-    {
-        try {
-            $fbProfileId = $this->profileId;
-            $client = new Client();
-            $fields = 'instagram_business_account';
-            $response = $client->get("https://graph.facebook.com/" . env('FACEBOOK_API_VERSION') . "/{$fbProfileId}?fields={$fields}&access_token=" . $this->accessToken);
-            return json_decode((string) $response->getBody(), true);
-        } catch (\Exception $e) {
-            // Handle exception or log error
-            return [
-                'error' => null,
-                'message' => $e,
-            ];
-        }
         
-    }
 }
