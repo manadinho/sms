@@ -65,7 +65,7 @@
             const body = document.body;
             const themeToggle = document.querySelector(".theme-icon");
             let themeMode = localStorage.getItem('themeMode');
-            
+
             if(!themeMode || themeMode === 'light') {
                 themeMode = 'light';
                 localStorage.setItem('themeMode', 'light');
@@ -74,8 +74,8 @@
                 themeToggle.querySelector("i").classList.add("bx-sun");
                 body.classList.add("dark-mode");
             }
-            
-            
+
+
             themeToggle.addEventListener("click", function() {
                 if(themeMode === 'light') {
                     themeMode = 'dark';

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 @include('partials.header')
-@include('partials.side-bar')		
+@include('partials.side-bar')
 		<!--Container Main start-->
 	<div class="height-100 bg-light">
 		<div class="container pt-4">
@@ -43,11 +43,11 @@
 							</div>
 						</div>
 						<hr>
-						<img src="{{ asset('images/logo.png') }}" class="card-img-top" alt="Post Image" height="200px">
+						<img src="{{ asset('images/boy.png') }}" class="card-img-top" alt="Post Image" height="200px">
 					</div>
 				</div>
 			</div>
-		</div>     
+		</div>
 		<!-- Modal for Create Post -->
 		<div class="modal fade" id="customCreatePostModal" tabindex="-1" role="dialog" aria-labelledby="customCreatePostModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">

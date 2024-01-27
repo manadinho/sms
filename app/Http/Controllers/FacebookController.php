@@ -23,7 +23,7 @@ class FacebookController extends Controller
     }
 
     /**
-     * Handle Facebook OAuth callback request to exchange authorization code 
+     * Handle Facebook OAuth callback request to exchange authorization code
      * for access token. Save access token, expiry time, and user profile.
      *
      * @return void
