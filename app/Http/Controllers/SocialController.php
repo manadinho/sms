@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\FacebookService;
+use App\Http\Services\GoogleService;
 use App\Http\Services\InstagramService;
 use App\Http\Services\LinkedinService;
 use App\Models\ConnectedSocial;
@@ -33,6 +34,27 @@ class SocialController extends Controller
         if($provider == 'INSTAGRAM') {
             return $this->searchInstagramEntities();
         }
+
+        if($provider == 'GOOGLE') {
+            return $this->searchGoogleEntities();
+        }
+    }
+
+    private function searchGoogleEntities() 
+    {
+        $googleService = new GoogleService();
+        $googleLatetProfile = UserSocialProfile::where(['user_id' => auth()->user()->id, 'provider' => 'GOOGLE'])->orderBy('updated_at', 'desc')->first();
+        $accounts = $googleService->fetchAccounts($googleLatetProfile);
+        $html = ($accounts) ? "":'<div class="text-center"><small>No Group Found</small></div>';
+        $connectedSocials = ConnectedSocial::where(['user_id' => auth()->user()->id, 'user_social_profile_id' => $googleLatetProfile->id, 'provider' => 'GOOGLE', 'type' => 'account'])->pluck('connected_social_id')->toArray();
+        foreach ($accounts as $entity) {
+            $html .= view('socials.partials.google-entity', compact('entity', 'connectedSocials'))->render();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html
+        ], 200);
     }
 
     private function searchInstagramEntities() 
@@ -168,9 +190,39 @@ class SocialController extends Controller
             ConnectedSocial::insert($preparedEntities);
         }
 
+        if($provider == 'GOOGLE') {
+            $googleService = new GoogleService();
+            $googleLatetProfile = UserSocialProfile::where(['user_id' => auth()->user()->id, 'provider' => 'GOOGLE'])->orderBy('updated_at', 'desc')->first();
+            
+            $preparedEntities = array_map(function($entity) use ($googleService, $googleLatetProfile) {
+                return $googleService->preparePageToCreate($entity, $googleLatetProfile);
+            }, request()->entities);
+
+            ConnectedSocial::where(['user_id' => auth()->user()->id, 'user_social_profile_id' => $googleLatetProfile->id, 'provider' => 'GOOGLE', 'type' => 'account'])->delete();
+            ConnectedSocial::insert($preparedEntities);
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Connected successfully'
+        ], 200);
+    }
+
+    public function statusChange() 
+    {
+        ConnectedSocial::where(['user_id' => auth()->user()->id, 'id' => request()->id])->update(['status' => !request()->status]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Status changed successfully'
+        ], 200);
+    }
+
+    public function deleteSocial() 
+    {
+        ConnectedSocial::where(['user_id' => auth()->user()->id, 'id' => request()->id])->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Deleted successfully'
         ], 200);
     }
 }

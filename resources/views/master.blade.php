@@ -15,6 +15,17 @@
 <body id="body-pd">
     @yield('content')
     @stack('script')
+    <!-- CONFIRM DILAOG CONTENT -->
+    <div class="den-confirm-dialog">
+    <div class="message">
+        <h2>Warning!</h2>
+        <p id="confirm-dialog-message">This is your message.</p>
+        <div class="buttons">
+            <button id="confirm-delete-btn">Delete</button>
+            <button class="den-close-button" id="confirm-cancel-btn">Cancel</button>
+        </div>
+    </div>
+    </div>
     <script>
         // todo:: refector this code use short opena close method to achieve DRY
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -99,6 +110,36 @@
             return `<div style="display:flex; justify-content:center">
                     <img src="${imagesrc}" alt="Loading...">
                     </div>`;
+        }
+
+        function confirmBefore(message = null, delete_btn_txt = null) {
+          return new Promise((resolve, reject) => {
+            message ??= 'You will lose all of your data by deleting this. This action cannot be undone.';
+
+            delete_btn_txt ??= 'Delete';
+
+            document.querySelector('.den-confirm-dialog').style.visibility = 'visible';
+
+            document.querySelector('#confirm-dialog-message').textContent = message;
+
+            const cancelBtn = document.querySelector('#confirm-cancel-btn');
+
+            const deleteBtn = document.querySelector('#confirm-delete-btn');
+
+            deleteBtn.textContent = delete_btn_txt;
+
+            cancelBtn.addEventListener('click', function() {
+                document.querySelector('.den-confirm-dialog').style.visibility = 'hidden';
+                reject();
+            })
+
+            deleteBtn.addEventListener('click', function() {
+                document.querySelector('.den-confirm-dialog').style.visibility = 'hidden';
+                resolve();
+            })
+          })
+
+            
         }
     </script>
 </body>

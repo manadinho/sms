@@ -31,14 +31,14 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function() {
 
 Route::group(['prefix' => 'connect', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'connect'])->name('facebook.connect');
-    Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
+    Route::get('/google', [GoogleLoginController::class, 'connect'])->name('google.connect');
     Route::get('/linkedin', [LinkedinController::class, 'connect'])->name('linkedin.connect');
     Route::get('/instagram', [InstagramController::class, 'connect'])->name('instagram.connect');
 });
 
 Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
     Route::get('/facebook', [FacebookController::class, 'callback'])->name('facebook.callback');
-    Route::get('/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google');
+    Route::get('/google', [GoogleLoginController::class, 'callback'])->name('google');
     Route::get('/linkedin', [LinkedinController::class, 'callback'])->name('linkedin.callback');
     Route::get('/instagram', [InstagramController::class, 'callback'])->name('instagram.callback');
 });
@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',[SocialController::class, 'index'])->name('index');
         Route::post('/search-entities',[SocialController::class, 'searchEntities'])->name('search-entities');
         Route::post('/connect-entities',[SocialController::class, 'connectEntities'])->name('connect-entities');
+        Route::post('/change-status',[SocialController::class, 'statusChange'])->name('change-status');
+        Route::post('/change-delete',[SocialController::class, 'deleteSocial'])->name('delete');
     });
        Route::get('/ecommerce',[HomeController::class, 'ecommerce'])->name('ecommerce');
 });

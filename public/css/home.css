@@ -370,7 +370,7 @@ margin-left: -6px;
             height: auto;
             background-color: var(--header-color);
             margin-left: 8px;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .custom-card {
@@ -562,9 +562,14 @@ padding: 10px 20px;
 }
 
 .social-avatar {
-width: 60px;
-box-shadow: 0 4px 8px #5fcfad;
+width: 50px;
 padding: 5px;
+}
+.social-avatar-active {
+box-shadow: 0 4px 8px #5fcfad;
+}
+.social-avatar-inactive {
+box-shadow: 0 4px 8px #be1104;
 }
 .custom-switch:checked {
     background-color:var(--white-color); /* Green color */
@@ -628,3 +633,47 @@ input[placeholder]{
       height: auto;
   }
   }
+
+  .den-confirm-dialog {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.den-confirm-dialog .message {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.den-confirm-dialog .message h2 {
+    font-weight: bold;
+}
+
+.den-confirm-dialog .buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.den-confirm-dialog .buttons button {
+    padding: 8px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.den-confirm-dialog .buttons #confirm-delete-btn {
+    background-color: #12b886;
+    color: #fff;
+}
