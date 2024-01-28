@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SigninMagicLinkEmail;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Http\Request;use App\Models\User;
 use App\Models\LoginMagicLinkToken;
 
 class AuthController extends Controller

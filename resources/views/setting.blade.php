@@ -33,15 +33,6 @@
                     <input type="tel" class=" form-control" placeholder="123456789">
                 </div>
             </div>
-            <!-- <div class="row py-2">
-                <div class="col-md-6 pt-md-0 pt-3">
-                    <label for="phone">Password</label>
-                    <input type="tel" class=" form-control" placeholder="123456789">
-                </div>
-                <div class="col-md-6 pt-md-0 pt-3" id="lang">
-                    </div>
-                </div>
-            </div> -->
             <div class="py-3 pb-4 border-bottom">
                 <button class="btn border button mr-3">Save Changes</button>
                 <button class="btn border button">Cancel</button>

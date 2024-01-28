@@ -124,7 +124,6 @@ trait FacebookTrait
             'email' => $profile['email'] ?? 'sms@sms.com',
             'name' => $profile['name'],
         ];
-
         UserSocialProfile::create($social_profile);
     }
 

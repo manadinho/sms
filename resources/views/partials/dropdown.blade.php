@@ -20,42 +20,8 @@
             <div class="dropdown-divider"></div>
             <div class="">
                 <ul class="list-unstyled">
-                    <li class="dropdown-submenu dropright-lg">
-                        <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
-                            <span class="mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                </svg>
-                            </span>
-                            <span>
-                                Status
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item text-success" href="#!">
-                                    Online
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-black-50" href="#!">
-                                    Offline
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-info" href="#!">
-                                    Away
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="#!">
-                                    Busy
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li>
-                        <a class="dropdown-item" href="@@webRoot/pages/profile-edit.html">
+                        <a class="dropdown-item" href="{{ route('setting') }}">
                             <span class="mr-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
