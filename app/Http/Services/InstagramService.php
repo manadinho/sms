@@ -30,7 +30,7 @@ class InstagramService
             'type' => 'account',
             'title' => $page['instagram_business_account']['username'],
             'access_token' => $page['access_token'],
-            'photo' => ['instagram_business_account']['profile_picture_url'] ??  asset('/images/instagram.svg'),
+            'photo' => $page['instagram_business_account']['profile_picture_url'] ??  asset('/images/instagram.svg'),
             'misc' => json_encode($page),
             'created_at' => now(),
             'updated_at' => now(),

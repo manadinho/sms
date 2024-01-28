@@ -58,7 +58,6 @@
         }
 
         function doInstaConnect() {
-            console.log('===here');
             if(!Object.keys(window.INSTA_SELECTED_ENTITIES).length) {
                 alert('Please select at least one ');
                 return;

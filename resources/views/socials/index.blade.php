@@ -13,7 +13,7 @@
         </div>
         <div class="container-fluid">
             @foreach($connectedSocials as $key => $connectedSocial)
-            <div class="card" style="width: 100%;">
+            <div class="card" style="width: 100%; margin-top:20px !important">
                 <h5 class="card-header">
                     @if($key == 'FACEBOOK')
                         <span class="social-header">
@@ -25,27 +25,36 @@
                             <img src="{{ asset('images/linkedin.svg') }}" class="social-icon" alt="Social Platform 2 Icon">
                             LINKEDIN
                         </span>
+                    @elseif($key == 'INSTAGRAM')
+                        <span class="social-header">
+                            <img src="{{ asset('images/instagram.svg') }}" class="social-icon" alt="Social Platform 2 Icon">
+                            INSTAGRAM
+                        </span>
+                    @elseif($key == 'GOOGLE')
+                        <span class="social-header">
+                            <img src="{{ asset('images/google-buisness.svg') }}" class="social-icon" alt="Social Platform 2 Icon">
+                            GOOGLE BUSINESS
+                        </span>
                     @endif
                 </h5>
                 <div class="card-body pb-3">
                     <div class="row">
                         @forelse($connectedSocial as $social)
-                            <div class="card col-md-3 social-card position-relative">
+                            <div class="card col-md-2 social-card position-relative" style="width: auto;">
                                 <div class="d-flex align-items-center justify-content-end position-absolute bottom-0 end-0 mb-1 me-2">
                                     <!-- Active/Inactive Toggle -->
                                     <div class="form-check form-switch me-2">
-                                        <input class="form-check-input custom-switch" type="checkbox" id="toggle{{$social->id}}" checked>
+                                        <input class="form-check-input custom-switch" type="checkbox" onclick="connectedSocialStatusChange('{{ $social->id}}', '{{ $social->status }}')" id="toggle-{{$social->id}}" {{$social->status ? 'checked' : ''}}>
                                         <label class="form-check-label" for="toggle{{$social->id}}"></label>
                                     </div>
-                                    <i class='bx bxs-trash' style='color:#d23f3f'></i>
+                                    <i class='bx bxs-trash' onclick="connectedSocialDelete('{{ $social->id }}')" style='color:#d23f3f'></i>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{$social->photo}}" class="rounded-circle mb-3 social-avatar" alt="social" />
+                                    <img src="{{$social->photo}}" class="rounded-circle mb-3 social-avatar  {{$social->status ? 'social-avatar-active' : 'social-avatar-inactive'}}" alt="social" />
                                     <div class="ms-3">
-                                        <h5 class=" text-truncate" style="max-width: 150px;"><strong>{{ $social->title }}</strong></h5>
+                                        <h5 class=" text-truncate" style="max-width: 180px;"><strong>{{ $social->title }}</strong></h5>
                                     </div>
                                 </div>
-                                {{-- <p class="text-muted">{{ \Carbon\Carbon::parse($social->created_at)->diffForHumans() }}</p> --}}
                             </div>
                         @empty
                             <p>No Record found</p>
@@ -104,7 +113,7 @@
                             <div class="card-body">
                               <h5 class="card-title">Google Business</h5>
                               <p class="card-text">Schedule and analyze posts on your Google Business Profile</p><br>
-                              <a href="#" class="btn custom-connect-btn">Connect</a>
+                              <a href="{{ route('google.connect') }}" class="btn custom-connect-btn">Connect</a>
                             </div>
                         </div>
                     </div>
@@ -117,6 +126,7 @@
 @include('socials.partials.fb-social-connect-modal')
 @include('socials.partials.linkedin-social-connect-modal')
 @include('socials.partials.instagram-social-connect-modal')
+@include('socials.partials.google-social-connect-modal')
 @endsection
 
 @push('script')
@@ -138,7 +148,57 @@
             if(window.PROVIDER == 'instagram') {
                 $('#instagram-modal').modal('show');
             }
+
+            if(window.PROVIDER == 'google') {
+                $('#google-modal').modal('show');
+            }
         });
+
+        // TODO:: checkbox checked status maintaing when catch block runs
+        function connectedSocialStatusChange(id, status) {
+            confirmBefore('Are you sure to change the status?', 'Yes').then(() => {
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('socials.change-status') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                        status
+                    },
+                    success: function(response) {
+                        if(response.status == 'success') {
+                            if(status) {
+                                $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').addClass('social-avatar-active').removeClass('social-avatar-inactive');
+                                return
+                            }
+                            $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').removeClass('social-avatar-active').addClass('social-avatar-inactive');
+                        }
+                    }
+                })
+            }).catch((error) => {
+                
+            });
+        }
+
+        function connectedSocialDelete(id) {
+            confirmBefore('Are you sure to delete?', 'Yes').then(() => {
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('socials.delete') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                    },
+                    success: function(response) {
+                        if(response.status == 'success') {
+                            $('#toggle-'+id).parent().parent().parent().remove();
+                        }
+                    }
+                })
+            }).catch((error) => {
+                
+            });
+        }
 
     </script>
 @endpush
