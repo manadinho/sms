@@ -9,9 +9,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\UserController;
 
 Route::get('auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::post('/registeruser' , [ UserController::class,'store'])->name('registeruser');
 
 
 Route::get('auth/linkedin/redirect', [LinkedinController::class,   'redirectToLinkedin'])->name('linkedin.redirect');
@@ -41,7 +43,6 @@ Route::group(['prefix' => 'callback', 'middleware' => 'auth'], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home',[HomeController::class, 'index']);
     Route::get('/', function () {return view('welcome');})->name('welcome');
-    Route::get('/ecommerce', function () {return view('ecommerce');})->name('ecommerce');
     Route::get('/setting', function () {return view('setting');})->name('setting');
     Route::get('/analytics', function () {return view('analytics');})->name('analytics');
     Route::group(['prefix' => 'socials', 'as' => 'socials.'], function() {
@@ -49,6 +50,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/search-entities',[SocialController::class, 'searchEntities'])->name('search-entities');
         Route::post('/connect-entities',[SocialController::class, 'connectEntities'])->name('connect-entities');
     });
+       Route::get('/ecommerce',[HomeController::class, 'ecommerce'])->name('ecommerce');
 });
 
 

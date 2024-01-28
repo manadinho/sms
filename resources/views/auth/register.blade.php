@@ -32,25 +32,26 @@
                     <path d="M30.5,36.5v-9.599c0-1.973-1.031-3.198-2.692-3.198c-1.295,0-1.935,0.912-2.243,1.677	c-0.082,0.199-0.071,0.989-0.067,1.326L25.5,36.5h-6v-18h6v1.638c0.795-0.823,2.075-1.638,4.238-1.638	c4.233,0,6.761,2.906,6.761,7.774L36.5,36.5H30.5z M11.5,36.5v-18h6v18H11.5z M14.457,17.5c-1.713,0-2.957-1.262-2.957-3.001	c0-1.738,1.268-2.999,3.014-2.999c1.724,0,2.951,1.229,2.986,2.989c0,1.749-1.268,3.011-3.015,3.011H14.457z" opacity=".07"></path><path fill="#fff" d="M12,19h5v17h-5V19z M14.485,17h-0.028C12.965,17,12,15.888,12,14.499C12,13.08,12.995,12,14.514,12	c1.521,0,2.458,1.08,2.486,2.499C17,15.887,16.035,17,14.485,17z M36,36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698	c-1.501,0-2.313,1.012-2.707,1.99C24.957,25.543,25,26.511,25,27v9h-5V19h5v2.616C25.721,20.5,26.85,19,29.738,19	c3.578,0,6.261,2.25,6.261,7.274L36,36L36,36z"></path>
                 </svg>
                 <div class="text-muted">
-                    Continue with Linkedin 
+                    Continue with Linkedin
                 </div>
             </button>
         </a>
         <div class="or">
             <span class="text-muted">OR</span>
         </div>
-        <div class="input-field">
-            <i class="fas fa-envelope"></i>
-            <input type="email" class="email-input" placeholder="Enter your email">
-        </div>
-        <div class="password-field" id="passwordField">
-            <i class="toggle-password fas fa-eye-slash" onclick="togglePassword()"></i>
-            <input type="password" class="password-input" placeholder="Enter your password">
-        </div>
-        <button class="signin-button" id="signInButton" style="display: none;">Sign In</button>
-        <br>
-        <button class="send-link-button">Continue with email</button>
-        <br>
+        <form method="POST" action="{{ route('registeruser') }}">
+           @csrf
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="email-input" name="email" placeholder="Enter your email">
+            </div>
+             <div class="password-field" id="passwordField">
+                    <i class="toggle-password fas fa-eye-slash eyeIcon" onclick="togglePassword()"></i>
+                    <input type="password" class="password-input" name="password" placeholder="Enter your password">
+                </div><br>
+            <button class="send-link-button">Continue with email</button>
+            <br>
+        </form>
         <p class="footer-paragraph">By continuing, you agree to the <a href="#" class="a-terms">Terms of Service</a> and <a href="#" class="a-terms">Privacy Policy</a>.</p>
     </div>
 @endsection

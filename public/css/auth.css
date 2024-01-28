@@ -38,7 +38,7 @@ body {
   border-radius: 50%;
   text-align: start;
 }
- 
+
 .google-login-button {
   display: block;
   align-items: center;
@@ -96,8 +96,8 @@ body {
   font-size: 14px;
 }
 .footer-paragraph a {
-  color: #666; 
-  text-decoration: underline; 
+  color: #666;
+  text-decoration: underline;
 }
 .or{
   text-align: center;
@@ -125,18 +125,17 @@ body {
 }
 
 .google-login-button svg {
-  margin-right: 8px; 
+  margin-right: 8px;
 }
 .account-text {
-  font-size: 14px; 
+  font-size: 14px;
 }
 .get-started-link {
-  color: #0ca678; 
+  color: #0ca678;
   text-decoration: none;
   font-size: 14px;
 }
 .password-field {
-  display: none;
   margin-top: 15px;
   position: relative;
 }
@@ -174,7 +173,7 @@ body {
       margin-bottom: 10px;
   }
   h1 {
-      font-size: 14px; 
+      font-size: 14px;
   }
   p {
       font-size: 12px;
@@ -184,9 +183,9 @@ body {
   .signin-button,
   .email-input,
   .password-input {
-      width: 100%; 
+      width: 100%;
   }
-  
+
 }
 
 .eyeIcon{
@@ -211,10 +210,10 @@ font-size: 3em;
 margin-right: 10px;
 }
 .custom-text-color {
-color: #868e96; 
+color: #868e96;
 font-size: larger;
 }
 .custom-text-color a {
-color: #868e96; 
-text-decoration: underline; 
+color: #868e96;
+text-decoration: underline;
 }

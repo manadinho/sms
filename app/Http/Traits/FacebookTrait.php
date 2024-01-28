@@ -124,7 +124,7 @@ trait FacebookTrait
             'email' => $profile['email'],
             'name' => $profile['name'],
         ];
-
+        dd($social_profile);
         UserSocialProfile::create($social_profile);
     }
 
