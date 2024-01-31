@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PhotoEditorController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 
@@ -55,7 +56,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/change-status',[SocialController::class, 'statusChange'])->name('change-status');
         Route::post('/change-delete',[SocialController::class, 'deleteSocial'])->name('delete');
     });
-       Route::get('/ecommerce',[HomeController::class, 'ecommerce'])->name('ecommerce');
+    Route::get('/ecommerce',[HomeController::class, 'ecommerce'])->name('ecommerce');
+
+    Route::group(['prefix' => 'photo-editor', 'as' => 'photo.editor.'], function() {
+        Route::get('/',[PhotoEditorController::class, 'index'])->name('index');
+    });
 });
 
 
