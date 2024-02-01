@@ -168,10 +168,10 @@
                     success: function(response) {
                         if(response.status == 'success') {
                             if(status) {
-                                $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').addClass('social-avatar-active').removeClass('social-avatar-inactive');
+                                $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').addClass('social-avatar').removeClass('social-avatar-inactive');
                                 return
                             }
-                            $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').removeClass('social-avatar-active').addClass('social-avatar-inactive');
+                            $('#toggle-'+id).parent().parent().parent().parent().find('.social-avatar').removeClass('social-avatar').addClass('social-avatar-inactive');
                         }
                     }
                 })
