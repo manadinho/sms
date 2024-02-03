@@ -881,6 +881,103 @@ textarea:focus {
 .facebook-reactions {
   display: inline-flex;
   gap: 10px;
-  position: absolute;
-  right: 6%;
+  position: relative;
+  left: 55%;
+}
+
+/* Instagram Preview */
+.instagram-preview {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 16px 8px 20px 14px;
+  width: 95%;
+  margin-top: 20px;
+  display: block; /* initially hide the Instagram preview */
+}
+.instagram-post-avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Instagram Post Avatar Image */
+.instagram-post-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Instagram Post Container */
+.instagram-post {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Instagram Post Image */
+.instagram-post-image {
+  max-width: 80%;
+  height: auto;
+}
+
+/* Instagram Post Caption */
+.instagram-post-caption {
+  margin-top: 15px;
+}
+
+/* Instagram Post Username */
+.instagram-post-caption h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Instagram Post Content */
+.instagram-post-caption .post-content p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Instagram Preview Icons */
+.instagram-preview-icons {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+/* Instagram Preview Icons img */
+.instagram-preview-icons img {
+  margin-right: 10px;
+}
+.h-name{
+  /* top: -438px; */
+  position: relative;
+}
+
+.facebook-preview {
+  display: none;
+}
+
+.linkedin-preview{
+  display: none;
+}
+
+.instagram-post-preview{
+  display: none;
+}
+
+.modal-open .modal {
+  overflow-y: hidden !important;
+}
+
+/* .create-section {
+  overflow: hidden;
+} */
+
+.preview-section{
+  width: 50%;
+  height: 500px;
+  overflow-y: scroll;
 }
