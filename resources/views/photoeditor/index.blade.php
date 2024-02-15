@@ -9944,12 +9944,6 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="palleon-file-field">
-                                    <input type="file" name="palleon-json-upload" id="palleon-json-upload"
-                                        class="palleon-hidden-file" accept=".json,application/JSON" />
-                                    <label for="palleon-json-upload" class="palleon-btn primary palleon-lg-btn"><span
-                                            class="material-icons">upload</span><span>Upload Template</span></label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -9959,8 +9953,6 @@
                             <div class="palleon-tabs">
                                 <ul class="palleon-tabs-menu">
                                     <li class="active" data-target="#palleon-all-templates">All</li>
-                                    <li data-target="#palleon-templates-favorites">My Favorites</li>
-                                    <li data-target="#palleon-mytemplates">My Templates</li>
                                 </ul>
                                 <!-- All Templates -->
                                 <div id="palleon-all-templates" class="palleon-tab active">
@@ -11096,12 +11088,12 @@
                 <div class="palleon-tabs">
                     <!-- Menu -->
                     <ul class="palleon-tabs-menu">
-                        <li class="active" data-target="#media-library-images">Media Library</li>
-                        <li data-target="#pexels">Pexels</li>
+                        <!-- <li data-target="#media-library-images">Media Library</li> -->
+                        <li class="active" data-target="#pexels">Pexels</li>
                         <li data-target="#pixabay">Pixabay</li>
                     </ul>
                     <!-- Media Library -->
-                    <div id="media-library-images" class="palleon-tab active">
+                    <div id="media-library-images" class="palleon-tab">
                         <div class="palleon-tabs">
                             <ul class="palleon-tabs-menu">
                                 <li data-target="#library-my-images" class="active">My Images</li>
@@ -11210,7 +11202,7 @@
                         </div>
                     </div>
                     <!-- Pexels -->
-                    <div id="pexels" class="palleon-tab">
+                    <div id="pexels" class="palleon-tab active">
                         <div id="pexels-menu">
                             <div id="pexels-search-options">
                                 <select id="pexels-orientation" class="palleon-select" autocomplete="off" disabled>

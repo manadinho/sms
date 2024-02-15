@@ -93,7 +93,7 @@
 										<div class="preview-body">
 											<div class="linkedin-post">
 												<img src="https://cdn.publer.io/profile-avatar.png" alt="Profile Picture" class="linkedin-post-profile-icon linkedin-img">
-												<h3 class="h-postname">Ahad Latif</h3>
+												<h3 class="h-postname">John Doe</h3>
 												<br>
 												<div class="post-content">
 													<p id="preview-text"></p>
@@ -111,7 +111,7 @@
 										<div class="preview-body">
 											<div class="linkedin-post">
 												<img src="https://cdn.publer.io/profile-avatar.png" alt="Profile Picture" class="linkedin-post-profile-icon linkedin-img">
-												<h3 class="h-postname">Ahad Latif</h3>
+												<h3 class="h-postname">John Doe</h3>
 												<br>
 												<div class="post-content">
 													<p id="preview-text-linkedin"></p>
@@ -137,7 +137,7 @@
 										<div class="preview-body">
 											<div class="instagram-post">
 												<img src="https://cdn.publer.io/profile-avatar.png" alt="Profile Picture" class="linkedin-post-profile-icon linkedin-img">
-												<h3 class="h-postname">Ahad Latif</h3>
+												<h3 class="h-postname">John Doe</h3>
 												<br>
 													<div class="post-content">
 														<p id="preview-text-instagram"></p>
@@ -214,8 +214,8 @@
 
 
 	function openFileInput() {
-            document.getElementById('imageInput').click();
-        }
+		document.getElementById('imageInput').click();
+	}
 
 	function previewImage() {
 		var input = document.getElementById('imageInput');
